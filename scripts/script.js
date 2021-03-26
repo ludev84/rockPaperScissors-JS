@@ -66,19 +66,26 @@ function game() {
         let currentGame = playRound(playerSelection, computerSelection)
         
         if (currentGame.substr(4,4) === "win!") wins += 1;
-        else loses += 1;
+        else if (currentGame.substr(4,4) === "lose" || currentGame.substr(4,4) === "need") {
+            loses += 1;
+        }
         console.log(currentGame);
     }
     // At the end of the loop, it shows you a message
     // followed by your number of loses/wins
     if (wins > loses) {
-        let message = `Congratulations, you won ${wins} out of 5!`
+        let message = `Congratulations, you won!`
         alert(message)
     }
+    else if (wins === loses) {
+        let message = "It's a tie!"
+    }
     else {
-        let message = `You lose, you were defeated ${loses} times!`
+        let message = `You lose!`
         alert(message);
     }
+    // Print the scores in the console
+    console.log(`Wins: ${wins}, loses: ${loses}`)
 }
 
 let playerSelection;
