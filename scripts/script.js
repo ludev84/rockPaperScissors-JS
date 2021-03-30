@@ -55,37 +55,38 @@ function playRound(playerSelection, computerSelection) {
 // game function plays 5 rounds
 // and logs in the console the win, lose, tie or invalid message.
 // At the end of the loop, it alerts a win or lose message,
-// followed by your number of wins or loses
+// followed by the game score.
 function game() {
-    let wins = 0;
-    let loses = 0;
-    // Play 5 rounds of the game and add counters to wins and loses variables
+    let player = 0;
+    let computer = 0;
+    // Play 5 rounds of the game and add counters to player and computer variables
     for (let i = 0; i < 5; i++) {
         playerSelection = playerPlay();
         computerSelection = computerPlay();
-        let currentGame = playRound(playerSelection, computerSelection)
+        let currentGame = playRound(playerSelection, computerSelection);
         
-        if (currentGame.substr(4,4) === "win!") wins += 1;
+        if (currentGame.substr(4,4) === "win!") player += 1;
         else if (currentGame.substr(4,4) === "lose" || currentGame.substr(4,4) === "need") {
-            loses += 1;
+            computer += 1;
         }
         console.log(currentGame);
+        alert(currentGame);
     }
     // At the end of the loop, it shows you a message
-    // followed by your number of loses/wins
-    if (wins > loses) {
-        let message = `Congratulations, you won!`
-        alert(message)
+    // followed by your number of computer/player
+    if (player > computer) {
+        let message = `Congratulations, you won! Player: ${player}, Computer: ${computer}.`;
+        alert(message);
     }
-    else if (wins === loses) {
-        let message = "It's a tie!"
+    else if (player === computer) {
+        let message = `It's a tie! Player: ${player}, Computer: ${computer}.`;
     }
     else {
-        let message = `You lose!`
+        let message = `You lose! player: Player: ${player}, Computer: ${computer}.`;
         alert(message);
     }
     // Print the scores in the console
-    console.log(`Wins: ${wins}, loses: ${loses}`)
+    console.log(`Player: ${player}, Computer: ${computer}.`);
 }
 
 let playerSelection;
