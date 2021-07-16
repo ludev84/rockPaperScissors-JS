@@ -11,12 +11,6 @@ function computerPlay() {
     }
 }
 
-// Create a function that asks the user to input a string in a prompt windows
-// The user should input rock, paper or scissors.
-function playerPlay() {
-    return prompt("Make your choice: ");
-}
-
 // Create a function that plays player vs the computer round and
 // outputs a message if it's a tie, win, lose or invalid input
 function playRound(playerSelection, computerSelection) {
@@ -52,43 +46,38 @@ function playRound(playerSelection, computerSelection) {
     }
 }
 
-// game function plays 5 rounds
-// and logs in the console the win, lose, tie or invalid message.
-// At the end of the loop, it alerts a win or lose message,
-// followed by the game score.
-function game() {
-    let player = 0;
-    let computer = 0;
-    // Play 5 rounds of the game and add counters to player and computer variables
-    for (let i = 0; i < 5; i++) {
-        playerSelection = playerPlay();
-        computerSelection = computerPlay();
-        let currentGame = playRound(playerSelection, computerSelection);
-        
-        if (currentGame.substr(4,4) === "win!") player += 1;
-        else if (currentGame.substr(4,4) === "lose" || currentGame.substr(4,4) === "need") {
-            computer += 1;
-        }
-        console.log(currentGame);
-        alert(currentGame);
-    }
-    // At the end of the loop, it shows you a message
-    // followed by your number of computer/player
-    if (player > computer) {
-        let message = `Congratulations, you won! Player: ${player}, Computer: ${computer}.`;
-        alert(message);
-    }
-    else if (player === computer) {
-        let message = `It's a tie! Player: ${player}, Computer: ${computer}.`;
-    }
-    else {
-        let message = `You lose! player: Player: ${player}, Computer: ${computer}.`;
-        alert(message);
-    }
-    // Print the scores in the console
-    console.log(`Player: ${player}, Computer: ${computer}.`);
-}
-
 let playerSelection;
 let computerSelection;
-game();
+let playerScore = 0;
+let computerScore = 0;
+
+const body = document.body;
+const resultsContainer = document.querySelector("#results-container");
+const resultDiv = document.querySelector("#result");
+const scoreDiv = document.querySelector("#score");
+const buttons = document.querySelectorAll("button");
+
+// Alertar el ID de cada boton al ser presionado
+buttons.forEach((button) => {
+    button.addEventListener("click", () => {
+        playerSelection = button.id;
+        computerSelection = computerPlay();
+        let currentGame = playRound(playerSelection, computerSelection);
+
+        if (currentGame.substr(4,4) === "win!") playerScore += 1;
+        else if (currentGame.substr(4,4) === "lose") computerScore += 1;
+
+        resultDiv.textContent = currentGame;
+        scoreDiv.textContent = `You: ${playerScore} - Computer: ${computerScore}`;
+
+        if (playerScore === 5 || computerScore === 5) {
+            if (playerScore === 5) alert("You won!");
+            else if (computerScore === 5) alert("You were defeated.");
+            playerScore = 0;
+            computerScore = 0;
+            // Limpiar pantalla de resultados
+            resultDiv.textContent = ""; 
+            scoreDiv.textContent = "";
+        }
+    });
+});
